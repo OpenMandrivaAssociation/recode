@@ -17,6 +17,7 @@ Patch0:		recode_3.6-10.diff
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 BuildRequires:	automake1.4
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 The GNU recode utility converts files between various character sets.
