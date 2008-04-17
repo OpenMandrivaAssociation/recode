@@ -1,10 +1,11 @@
 %define	major 0
-%define libname	%mklibname %{name} %{major}
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	%mkrel 13
+Release:	%mkrel 14
 Group:		Text tools
 License:	GPL
 URL:		http://recode.progiciels-bpi.ca/
@@ -13,11 +14,11 @@ Source0:	ftp://prep.ai.mit.edu:/pub/gnu/recode/recode-%{version}.tar.bz2
 # http://www.pybliographer.org/help/recode.patch
 # recode and mysql symbols collided and made php crash, this patch
 # fixes this.
-Patch0:		recode_3.6-10.diff
+Patch0:		recode_3.6-15.diff
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 BuildRequires:	automake1.4
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -31,15 +32,16 @@ The GNU recode utility converts files between various character sets.
 
 This package provides the shared recode library.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Development files for the %{libname} library
 Group:		Development/C
 Obsoletes:	%{name}-devel
 Provides:	%{name}-devel
 Provides:	lib%{name}-devel
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{version}
+Obsoletes:	%{mklibname %{name} 0 -d}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Development files for the %{libname} library
 
 %prep
@@ -77,10 +79,6 @@ rm -f %{buildroot}%{_infodir}/dir
 
 %postun -n %{libname} -p /sbin/ldconfig
 
-%post -n %{libname}-devel -p /sbin/ldconfig
-
-%postun -n %{libname}-devel -p /sbin/ldconfig
-
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
@@ -96,11 +94,10 @@ rm -f %{buildroot}%{_infodir}/dir
 %defattr(0644,root,root,755)
 %attr(0755,root,root) %{_libdir}/lib*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(0644,root,root,755)
 %doc contrib
 %{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.la
 %{_includedir}/*.h
-
