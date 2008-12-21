@@ -5,7 +5,7 @@
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	%mkrel 15
+Release:	%mkrel 16
 Group:		Text tools
 License:	GPL
 URL:		http://recode.progiciels-bpi.ca/
@@ -15,6 +15,7 @@ Source0:	ftp://prep.ai.mit.edu:/pub/gnu/recode/recode-%{version}.tar.bz2
 # recode and mysql symbols collided and made php crash, this patch
 # fixes this.
 Patch0:		recode_3.6-15.diff
+Patch1:		recode-3.6-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 BuildRequires:	automake1.4
@@ -48,6 +49,7 @@ Development files for the %{libname} library
 
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 
