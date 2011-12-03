@@ -5,7 +5,7 @@
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	%mkrel 20
+Release:	21
 Group:		Text tools
 License:	GPL
 URL:		http://recode.progiciels-bpi.ca/
@@ -19,7 +19,6 @@ Patch1:		recode-3.6-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	flex
 BuildRequires:	gettext-devel
 BuildRequires:	automake1.4
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -39,7 +38,7 @@ Group:		Development/C
 Obsoletes:	%{name}-devel
 Provides:	%{name}-devel
 Provides:	lib%{name}-devel
-Requires:	%{libname} = %{version}
+Requires:	%{libname} >= %{version}-%{release}
 Obsoletes:	%{mklibname %{name} 0 -d}
 
 %description -n	%{develname}
@@ -62,7 +61,7 @@ touch *
 %make CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
@@ -71,25 +70,16 @@ touch *
 # house cleansing
 rm -f %{buildroot}%{_infodir}/dir
 
+# cleanup
+rm -rf %{buildroot}%{_libdir}/*.*a
+
 %post
 %_install_info %{name}.info
 
 %postun
 %_remove_install_info %{name}.info
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc BACKLOG COPYING INSTALL NEWS README
 %doc THANKS doc
 %{_bindir}/*
@@ -97,13 +87,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_infodir}/*
 
 %files -n %{libname}
-%defattr(0644,root,root,755)
 %attr(0755,root,root) %{_libdir}/lib*.so.*
 
 %files -n %{develname}
-%defattr(0644,root,root,755)
 %doc contrib
 %{_libdir}/*.so
-%{_libdir}/*.a
-%{_libdir}/*.la
 %{_includedir}/*.h
