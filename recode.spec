@@ -5,7 +5,7 @@
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	22
+Release:	23
 Group:		Text tools
 License:	GPL
 URL:		http://recode.progiciels-bpi.ca/
@@ -16,9 +16,10 @@ Source0:	ftp://prep.ai.mit.edu:/pub/gnu/recode/recode-%{version}.tar.bz2
 # fixes this.
 Patch0:		recode_3.6-15.diff
 Patch1:		recode-3.6-format_not_a_string_literal_and_no_format_arguments.diff
+Patch2:		recode-automake.patch
+Patch3:		recode-flex-m4.patch
 BuildRequires:	flex
 BuildRequires:	gettext-devel
-BuildRequires:	automake1.4
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -49,8 +50,16 @@ Development files for the %{libname} library
 %setup -q
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
+%patch3 -p1
 
 %build
+rm -f acinclude.m4
+libtoolize --install --copy --force --automake
+aclocal -I m4
+autoconf
+autoheader
+automake --add-missing --copy
 
 %configure2_5x \
      --without-included-gettext
