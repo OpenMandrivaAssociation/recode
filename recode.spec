@@ -20,6 +20,7 @@ Patch2:		recode-automake.patch
 Patch3:		recode-flex-m4.patch
 BuildRequires:	flex
 BuildRequires:	gettext-devel
+BuildRequires:	texinfo
 
 %description
 The GNU recode utility converts files between various character sets.
