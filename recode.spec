@@ -5,7 +5,7 @@
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	29
+Release:	30
 Group:		Text tools
 License:	GPL
 URL:		http://recode.progiciels-bpi.ca/
