@@ -94,7 +94,6 @@ rm -f %{buildroot}%{_infodir}/dir
 %defattr(0644,root,root,755)
 %doc contrib
 %{_libdir}/*.so
-%{_libdir}/*.a
 %{_includedir}/*.h
 
 
