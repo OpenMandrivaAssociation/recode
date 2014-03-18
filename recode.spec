@@ -37,7 +37,6 @@ Summary:	Development files for the %{libname} library
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
-Obsoletes:	%{mklibname %{name} 0 -d}
 
 %description -n	%{devname}
 Development files for the %{libname} library.
