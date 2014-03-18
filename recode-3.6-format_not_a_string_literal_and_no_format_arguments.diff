@@ -1,5 +1,5 @@
---- src/names.c	2008-12-22 00:12:53.000000000 +0100
-+++ src/names.c.oden	2008-12-22 00:12:43.000000000 +0100
+--- ./src/names.c	2008-12-22 00:12:53.000000000 +0100
++++ ./src/names.c.oden	2008-12-22 00:12:43.000000000 +0100
 @@ -892,7 +892,7 @@ list_concise_charset (RECODE_OUTER outer
  	    if (ucs2 >= 0)
  	      printf (format, code);
