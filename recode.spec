@@ -49,7 +49,10 @@ rm -f acinclude.m4
 autoreconf -fi
 
 %build
-%configure2_5x \
+# http://clang.debian.net/status.php?version=3.3&key=UNDEF_REF
+# fail with clang
+export CC="gcc"
+%configure \
 	--disable-static \
 	--without-included-gettext
 
