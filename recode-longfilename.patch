@@ -1,0 +1,51 @@
+diff -u -r recode-3.6.orig/src/common.h recode-3.6/src/common.h
+--- recode-3.6.orig/src/common.h	2000-06-28 20:40:15.000000000 +0200
++++ recode-3.6/src/common.h	2017-10-03 13:52:09.904644383 +0200
+@@ -56,13 +56,14 @@
+ # define RETSIGTYPE void
+ #endif
+ 
+-#if DIFF_HASH
+-# ifdef HAVE_LIMITS_H
+-#  include <limits.h>
+-# endif
+-# ifndef CHAR_BIT
+-#  define CHAR_BIT 8
+-# endif
++#ifdef HAVE_LIMITS_H
++# include <limits.h>
++#endif
++#ifndef CHAR_BIT
++# define CHAR_BIT 8
++#endif
++#ifndef PATH_MAX
++# define PATH_MAX 4096
+ #endif
+ 
+ /* Some systems do not define EXIT_*, even with STDC_HEADERS.  */
+diff -u -r recode-3.6.orig/src/main.c recode-3.6/src/main.c
+--- recode-3.6.orig/src/main.c	2000-12-06 20:44:59.000000000 +0100
++++ recode-3.6/src/main.c	2017-10-03 14:32:51.274017940 +0200
+@@ -847,7 +847,7 @@
+ 	  for (; optind < argc; optind++)
+ 	    {
+ 	      const char *input_name;
+-	      char output_name[200]; /* FIXME: dangerous limit */
++	      char output_name[PATH_MAX];
+ 	      FILE *file;
+ 	      struct stat file_stat;
+ 	      struct utimbuf file_utime;
+@@ -871,7 +871,12 @@
+ 
+ 		/* FIXME: Scott Schwartz <schwartz@bio.cse.psu.edu> writes:
+ 		   "There's no reason to think that that name is unique."  */
+-
++        // To avoid overflows, the size of the array pointed by destination (output_name)
++        // shall be long enough to contain the same C string as source
++        // (including the terminating null character).
++        if (strlen(input_name) >= PATH_MAX) {
++            error (EXIT_FAILURE, 0, "input_name reach the PATH_MAX limit");
++        }
+ 		strcpy (output_name, input_name);
+ #if DOSWIN_OR_OS2
+ 		for (cursor = output_name + strlen (output_name);

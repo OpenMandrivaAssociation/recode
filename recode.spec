@@ -7,19 +7,18 @@
 Summary:	GNU recode
 Name:		recode
 Version:	3.6
-Release:	36
+Release:	37
 Group:		Text tools
 License:	GPLv2
 Url:		http://recode.progiciels-bpi.ca/
 Source0:	ftp://prep.ai.mit.edu:/pub/gnu/recode/recode-%{version}.tar.bz2
-# OE: taken from debian, but symbol clash fix originates from here:
-# http://www.pybliographer.org/help/recode.patch
-# recode and mysql symbols collided and made php crash, this patch
-# fixes this.
-Patch0:		recode_3.6-15.diff
-Patch1:		recode-3.6-format_not_a_string_literal_and_no_format_arguments.diff
-Patch2:		recode-automake.patch
+Patch0:		recode.patch
+Patch1:		recode-3.6-getcwd.patch
+Patch2:		recode-bool-bitfield.patch
 Patch3:		recode-flex-m4.patch
+Patch4:		recode-automake.patch
+Patch5:		recode-format-security.patch
+Patch6:		recode-longfilename.patch
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
@@ -45,9 +44,15 @@ Development files for the %{libname} library.
 
 %prep
 %setup -q
-%apply_patches
-
-rm -f acinclude.m4
+%patch0 -p1
+%patch1 -p1 -b .getcwd
+%patch2 -p0
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+rm m4/libtool.m4
+rm acinclude.m4
 autoreconf -fi
 
 %build
