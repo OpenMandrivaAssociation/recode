@@ -47,6 +47,8 @@ export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 # no -recheck hack
 touch *
 
+2to3 tables.py
+
 %make_build
 
 %install
