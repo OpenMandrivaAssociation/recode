@@ -6,19 +6,12 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.6
-Release:	37
+Version:	3.7
+Release:	1
 Group:		Text tools
 License:	GPLv2
-Url:		http://recode.progiciels-bpi.ca/
-Source0:	ftp://prep.ai.mit.edu:/pub/gnu/recode/recode-%{version}.tar.bz2
-Patch0:		recode.patch
-Patch1:		recode-3.6-getcwd.patch
-Patch2:		recode-bool-bitfield.patch
-Patch3:		recode-flex-m4.patch
-Patch4:		recode-automake.patch
-Patch5:		recode-format-security.patch
-Patch6:		recode-longfilename.patch
+Url:		https://github.com/rrthomas/recode
+Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
@@ -44,21 +37,9 @@ Development files for the %{libname} library.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 -b .getcwd
-%patch2 -p0
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-rm m4/libtool.m4
-rm acinclude.m4
-autoreconf -fi
 
 %build
-# http://clang.debian.net/status.php?version=3.3&key=UNDEF_REF
-# fail with clang
-export CC="gcc"
+export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 %configure \
 	--disable-static \
 	--without-included-gettext
@@ -66,10 +47,10 @@ export CC="gcc"
 # no -recheck hack
 touch *
 
-%make CFLAGS="%{optflags} -D_REENTRANT -fPIC"
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 %find_lang %{name}
 
