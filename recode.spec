@@ -40,6 +40,7 @@ Development files for the %{libname} library.
 %setup -q
 
 %build
+export PYTHON=%{__python2}
 export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 %configure \
 	--disable-static \
