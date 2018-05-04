@@ -15,6 +15,7 @@ Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
+BuildRequires:	pkgconfig(python2)
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -47,8 +48,6 @@ export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 # no -recheck hack
 touch *
 
-2to3 tables.py
-
 %make_build
 
 %install
@@ -73,4 +72,3 @@ rm -f %{buildroot}%{_infodir}/dir
 %doc contrib
 %{_libdir}/librecode.so
 %{_includedir}/*.h
-
