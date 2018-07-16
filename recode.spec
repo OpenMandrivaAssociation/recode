@@ -49,7 +49,7 @@ export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 # no -recheck hack
 touch *
 
-%make_build
+%make_build PYTHON=%{__python2}
 
 %install
 %make_install
