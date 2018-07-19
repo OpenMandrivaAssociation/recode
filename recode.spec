@@ -1,9 +1,9 @@
-%define	major 0
+%define major 0
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 %define _disable_rebuild_configure 1
 %define _disable_lto 1
-%global optflags %{optflags} --rtlib=compiler-rt
+%global optflags %{optflags} -D_REENTRANT -fPIC --rtlib=compiler-rt
 
 Summary:	GNU recode
 Name:		recode
@@ -22,20 +22,20 @@ BuildRequires:	pkgconfig(python2)
 %description
 The GNU recode utility converts files between various character sets.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Shared GNU recode library
 Group:          System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 This package provides the shared recode library.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development files for the %{libname} library
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 Development files for the %{libname} library.
 
 %prep
@@ -44,7 +44,6 @@ Development files for the %{libname} library.
 
 %build
 export PYTHON=%{__python2}
-export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 %configure \
 	--disable-static \
 	--without-included-gettext
