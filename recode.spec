@@ -3,6 +3,7 @@
 %define devname %mklibname %{name} -d
 %define _disable_rebuild_configure 1
 %define _disable_lto 1
+%global optflags %{optflags} --rtlib=compiler-rt
 
 Summary:	GNU recode
 Name:		recode
@@ -12,6 +13,7 @@ Group:		Text tools
 License:	GPLv2
 Url:		https://github.com/rrthomas/recode
 Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Patch0:		recode-3.7-check-for-__builtin_mul_overflow_p.patch
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel

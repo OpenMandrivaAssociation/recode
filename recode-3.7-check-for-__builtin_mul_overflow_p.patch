@@ -1,0 +1,101 @@
+diff -Naur recode-3.7/configure.ac recode-3.7.tpg/configure.ac
+--- recode-3.7/configure.ac	2018-01-30 20:19:50.000000000 +0000
++++ recode-3.7.tpg/configure.ac	2018-07-19 09:18:25.586897073 +0000
+@@ -18,6 +18,18 @@
+ AX_PYTHON_VERSION_ENSURE([2.2])
+ gl_INIT
+ 
++AC_CACHE_CHECK([for gcc 7-compatible __builtin_mul_overflow_p],
++  [utils_cv_builtin_mul_overflow_p],
++  [AC_COMPILE_IFELSE(
++    [AC_LANG_PROGRAM(
++      [[]],
++      [[return __builtin_mul_overflow_p(1, 2, 3);]])],
++    [utils_cv_builtin_mul_overflow_p=yes],
++    [utils_cv_builtin_mul_overflow_p=no])])
++if test $utils_cv_builtin_mul_overflow_p = yes; then
++  AC_DEFINE([HAVE_BUILTIN_MUL_OVERFLOW_P], [1], [Define if your compiler supports __builtin_mul_overflow_p])
++fi
++
+ dnl help2man
+ dnl Set a value even if not found, so that an invocation via build-aux/missing works
+ AX_WITH_PROG([HELP2MAN], [help2man], [help2man])
+diff -Naur recode-3.7/lib/intprops.h recode-3.7.tpg/lib/intprops.h
+--- recode-3.7/lib/intprops.h	2018-01-14 22:00:17.000000000 +0000
++++ recode-3.7.tpg/lib/intprops.h	2018-07-19 09:22:03.601326594 +0000
+@@ -225,14 +225,11 @@
+ # define _GL_HAS_BUILTIN_OVERFLOW 0
+ #endif
+ 
+-/* True if __builtin_add_overflow_p (A, B, C) works.  */
+-#define _GL_HAS_BUILTIN_OVERFLOW_P (7 <= __GNUC__)
+-
+ /* The _GL*_OVERFLOW macros have the same restrictions as the
+    *_RANGE_OVERFLOW macros, except that they do not assume that operands
+    (e.g., A and B) have the same type as MIN and MAX.  Instead, they assume
+    that the result (e.g., A + B) has that type.  */
+-#if _GL_HAS_BUILTIN_OVERFLOW_P
++#ifdef HAVE_BUILTIN_MUL_OVERFLOW_P
+ # define _GL_ADD_OVERFLOW(a, b, min, max)                               \
+    __builtin_add_overflow_p (a, b, (__typeof__ ((a) + (b))) 0)
+ # define _GL_SUBTRACT_OVERFLOW(a, b, min, max)                          \
+diff -Naur recode-3.7/lib/mbrtowc.c recode-3.7.tpg/lib/mbrtowc.c
+--- recode-3.7/lib/mbrtowc.c	2018-01-14 22:00:06.000000000 +0000
++++ recode-3.7.tpg/lib/mbrtowc.c	2018-07-19 09:22:52.316218468 +0000
+@@ -36,7 +36,7 @@
+ # include "verify.h"
+ 
+ #ifndef FALLTHROUGH
+-# if __GNUC__ < 7
++# if __GNUC__ < 7 || !__has_attribute(__fallthrough__)
+ #  define FALLTHROUGH ((void) 0)
+ # else
+ #  define FALLTHROUGH __attribute__ ((__fallthrough__))
+diff -Naur recode-3.7/lib/quotearg.c recode-3.7.tpg/lib/quotearg.c
+--- recode-3.7/lib/quotearg.c	2018-01-14 22:00:06.000000000 +0000
++++ recode-3.7.tpg/lib/quotearg.c	2018-07-19 09:23:13.128174049 +0000
+@@ -55,7 +55,7 @@
+ #define INT_BITS (sizeof (int) * CHAR_BIT)
+ 
+ #ifndef FALLTHROUGH
+-# if __GNUC__ < 7
++# if __GNUC__ < 7 || !__has_attribute(__fallthrough__)
+ #  define FALLTHROUGH ((void) 0)
+ # else
+ #  define FALLTHROUGH __attribute__ ((__fallthrough__))
+diff -Naur recode-3.7/lib/vasnprintf.c recode-3.7.tpg/lib/vasnprintf.c
+--- recode-3.7/lib/vasnprintf.c	2018-01-14 22:00:17.000000000 +0000
++++ recode-3.7.tpg/lib/vasnprintf.c	2018-07-19 09:23:43.337111347 +0000
+@@ -119,7 +119,7 @@
+ #endif
+ 
+ #ifndef FALLTHROUGH
+-# if __GNUC__ < 7
++# if __GNUC__ < 7 || !__has_attribute(__fallthrough__)
+ #  define FALLTHROUGH ((void) 0)
+ # else
+ #  define FALLTHROUGH __attribute__ ((__fallthrough__))
+diff -Naur recode-3.7/lib/xalloc-oversized.h recode-3.7.tpg/lib/xalloc-oversized.h
+--- recode-3.7/lib/xalloc-oversized.h	2018-01-14 22:00:06.000000000 +0000
++++ recode-3.7.tpg/lib/xalloc-oversized.h	2018-07-19 09:20:47.716507791 +0000
+@@ -41,7 +41,7 @@
+    positive and N must be nonnegative.  This is a macro, not a
+    function, so that it works correctly even when SIZE_MAX < N.  */
+ 
+-#if 7 <= __GNUC__
++#ifdef HAVE_BUILTIN_MUL_OVERFLOW_P
+ # define xalloc_oversized(n, s) \
+    __builtin_mul_overflow_p (n, s, (__xalloc_count_type) 1)
+ #elif 5 <= __GNUC__ && !defined __ICC && !__STRICT_ANSI__
+diff -Naur recode-3.7/src/common.h recode-3.7.tpg/src/common.h
+--- recode-3.7/src/common.h	2018-01-30 19:18:23.000000000 +0000
++++ recode-3.7.tpg/src/common.h	2018-07-19 09:24:24.370029342 +0000
+@@ -43,7 +43,7 @@
+ #define N_(Text) Text
+ 
+ #ifndef FALLTHROUGH
+-# if __GNUC__ < 7
++# if __GNUC__ < 7 || !__has_attribute(__fallthrough__)
+ #  define FALLTHROUGH ((void) 0)
+ # else
+ #  define FALLTHROUGH __attribute__ ((__fallthrough__))
