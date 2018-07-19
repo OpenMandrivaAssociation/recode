@@ -40,6 +40,7 @@ Development files for the %{libname} library.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 export PYTHON=%{__python2}
