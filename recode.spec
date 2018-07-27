@@ -43,6 +43,7 @@ Development files for the %{libname} library.
 %autopatch -p1
 
 %build
+autoreconf -fiv
 export PYTHON=%{__python2}
 %configure \
 	--disable-static \
