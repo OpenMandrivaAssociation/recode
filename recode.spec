@@ -18,6 +18,7 @@ BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(python2)
+BuildRequires:	help2man
 
 %description
 The GNU recode utility converts files between various character sets.
