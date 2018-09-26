@@ -7,7 +7,7 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7
+Version:	3.7.1
 Release:	1
 Group:		Text tools
 License:	GPLv2
