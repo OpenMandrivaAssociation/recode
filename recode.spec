@@ -18,7 +18,6 @@ BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(python2)
-BuildRequires:	help2man
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -44,6 +43,7 @@ Development files for the %{libname} library.
 %autopatch -p1
 
 %build
+export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 autoreconf -fiv
 export PYTHON=%{__python2}
 %configure \
@@ -62,6 +62,9 @@ touch *
 
 # house cleansing
 rm -f %{buildroot}%{_infodir}/dir
+
+# we don't want these
+find %{buildroot} -name '*.la' -delete
 
 %files -f %{name}.lang
 %doc BACKLOG COPYING INSTALL NEWS README
