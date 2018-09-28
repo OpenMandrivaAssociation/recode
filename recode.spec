@@ -14,6 +14,7 @@ License:	GPLv2
 Url:		https://github.com/rrthomas/recode
 Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		recode-3.7-check-for-__builtin_mul_overflow_p.patch
+BuildRequires:	libtool
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
