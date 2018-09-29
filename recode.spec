@@ -54,7 +54,7 @@ export PYTHON=%{__python2}
 # no -recheck hack
 touch *
 
-%make_build PYTHON=%{__python2}
+%make_build -j1 PYTHON=%{__python2}
 
 %install
 %make_install
