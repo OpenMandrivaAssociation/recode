@@ -20,7 +20,6 @@ BuildRequires:	texinfo
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(python2)
 BuildRequires:	help2man
-BuildRequires:	perl(Locale::gettext)
 
 %description
 The GNU recode utility converts files between various character sets.
@@ -53,8 +52,6 @@ export PYTHON=%{__python2}
 	--disable-static \
 	--without-included-gettext
 
-# no -recheck hack
-touch *
 
 %make_build -j1 PYTHON=%{__python2}
 
