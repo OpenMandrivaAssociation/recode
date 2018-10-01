@@ -20,6 +20,7 @@ BuildRequires:	texinfo
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(python2)
 BuildRequires:	help2man
+BuildRequires:	perl(Locale::gettext)
 
 %description
 The GNU recode utility converts files between various character sets.
