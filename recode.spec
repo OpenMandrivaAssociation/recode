@@ -20,14 +20,14 @@ BuildRequires:	texinfo
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(python2)
 BuildRequires:	help2man
-BuildRequires:	locales-en
+BuildRequires:	perl-Locale-gettext
 
 %description
 The GNU recode utility converts files between various character sets.
 
 %package -n %{libname}
 Summary:	Shared GNU recode library
-Group:          System/Libraries
+Group:		System/Libraries
 
 %description -n %{libname}
 This package provides the shared recode library.
