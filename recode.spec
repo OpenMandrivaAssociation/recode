@@ -67,8 +67,7 @@ rm -f %{buildroot}%{_infodir}/dir
 find %{buildroot} -name '*.la' -delete
 
 %files -f %{name}.lang
-%doc BACKLOG COPYING INSTALL NEWS README
-%doc THANKS doc
+%doc COPYING INSTALL NEWS README
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_infodir}/*
