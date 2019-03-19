@@ -3,7 +3,9 @@
 %define devname %mklibname %{name} -d
 %define _disable_rebuild_configure 1
 %define _disable_lto 1
+%ifnarch riscv64
 %global optflags %{optflags} -D_REENTRANT -fPIC --rtlib=compiler-rt
+%endif
 
 Summary:	GNU recode
 Name:		recode
