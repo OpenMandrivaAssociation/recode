@@ -9,8 +9,8 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7.1
-Release:	2
+Version:	3.7.2
+Release:	1
 Group:		Text tools
 License:	GPLv2
 Url:		https://github.com/rrthomas/recode
