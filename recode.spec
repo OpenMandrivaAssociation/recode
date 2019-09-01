@@ -1,4 +1,4 @@
-%define major 0
+%define major 3
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 %define _disable_rebuild_configure 1
@@ -9,7 +9,7 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7.2
+Version:	3.7.3
 Release:	1
 Group:		Text tools
 License:	GPLv2
