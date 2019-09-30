@@ -9,7 +9,7 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7.3
+Version:	3.7.6
 Release:	1
 Group:		Text tools
 License:	GPLv2
@@ -44,8 +44,7 @@ Requires:	%{libname} = %{version}-%{release}
 Development files for the %{libname} library.
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
