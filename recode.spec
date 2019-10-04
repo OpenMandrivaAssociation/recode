@@ -20,7 +20,7 @@ BuildRequires:	libtool
 BuildRequires:	flex
 BuildRequires:	texinfo
 BuildRequires:	gettext-devel
-BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(python)
 BuildRequires:	help2man
 BuildRequires:	perl-Locale-gettext
 
@@ -49,12 +49,12 @@ Development files for the %{libname} library.
 %build
 export CFLAGS="%{optflags} -D_REENTRANT -fPIC"
 autoreconf -fiv
-export PYTHON=%{__python2}
+
 %configure \
 	--disable-static \
 	--without-included-gettext
 
-%make_build -j1 PYTHON=%{__python2}
+%make_build -j1
 
 %install
 %make_install
