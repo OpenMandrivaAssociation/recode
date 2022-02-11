@@ -9,13 +9,12 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7.9
+Version:	3.7.11
 Release:	1
 Group:		Text tools
 License:	GPLv2
 Url:		https://github.com/rrthomas/recode
 Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Patch0:		recode-3.7-check-for-__builtin_mul_overflow_p.patch
 BuildRequires:	libtool
 BuildRequires:	flex
 BuildRequires:	texinfo
@@ -70,8 +69,8 @@ find %{buildroot} -name '*.la' -delete
 %files -f %{name}.lang
 %doc COPYING INSTALL NEWS README
 %{_bindir}/*
-%{_mandir}/man1/*
-%{_infodir}/*
+%doc %{_mandir}/man1/*
+%doc %{_infodir}/*
 
 %files -n %{libname}
 %{_libdir}/librecode.so.%{major}*
