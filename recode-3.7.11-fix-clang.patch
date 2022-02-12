@@ -1,0 +1,72 @@
+diff -Naur recode-3.7.11/config.h.in recode-3.7.11.tpg/config.h.in
+--- recode-3.7.11/config.h.in	2022-01-24 22:11:22.000000000 +0000
++++ recode-3.7.11.tpg/config.h.in	2022-02-12 19:35:00.772066047 +0000
+@@ -1491,7 +1491,7 @@
+    _GL_ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
+    can be freed via 'free'; it can be used only after declaring 'free'.  */
+ /* Applies to: functions.  Cannot be used on inline functions.  */
+-#if _GL_GNUC_PREREQ (11, 0)
++#if _GL_GNUC_PREREQ (11, 0) && !defined(__clang__)
+ # define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ #else
+ # define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -Naur recode-3.7.11/lib/stdio.in.h recode-3.7.11.tpg/lib/stdio.in.h
+--- recode-3.7.11/lib/stdio.in.h	2022-01-06 07:42:31.000000000 +0000
++++ recode-3.7.11.tpg/lib/stdio.in.h	2022-02-12 19:34:41.382158262 +0000
+@@ -95,7 +95,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -Naur recode-3.7.11/lib/stdlib.in.h recode-3.7.11.tpg/lib/stdlib.in.h
+--- recode-3.7.11/lib/stdlib.in.h	2022-01-06 07:42:31.000000000 +0000
++++ recode-3.7.11.tpg/lib/stdlib.in.h	2022-02-12 19:34:30.312210913 +0000
+@@ -103,7 +103,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -Naur recode-3.7.11/lib/string.in.h recode-3.7.11.tpg/lib/string.in.h
+--- recode-3.7.11/lib/string.in.h	2022-01-06 07:42:31.000000000 +0000
++++ recode-3.7.11.tpg/lib/string.in.h	2022-02-12 19:34:16.452276839 +0000
+@@ -71,7 +71,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -Naur recode-3.7.11/lib/wchar.in.h recode-3.7.11.tpg/lib/wchar.in.h
+--- recode-3.7.11/lib/wchar.in.h	2022-01-06 07:42:32.000000000 +0000
++++ recode-3.7.11.tpg/lib/wchar.in.h	2022-02-12 19:33:59.032359706 +0000
+@@ -88,7 +88,7 @@
+    that can be freed by passing them as the Ith argument to the
+    function F.  */
+ #ifndef _GL_ATTRIBUTE_DEALLOC
+-# if __GNUC__ >= 11
++# if __GNUC__ >= 11 && !defined(__clang__)
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ # else
+ #  define _GL_ATTRIBUTE_DEALLOC(f, i)
+diff -Naur recode-3.7.11/m4/gnulib-common.m4 recode-3.7.11.tpg/m4/gnulib-common.m4
+--- recode-3.7.11/m4/gnulib-common.m4	2022-01-21 14:22:38.000000000 +0000
++++ recode-3.7.11.tpg/m4/gnulib-common.m4	2022-02-12 19:33:45.252425263 +0000
+@@ -176,7 +176,7 @@
+    _GL_ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
+    can be freed via 'free'; it can be used only after declaring 'free'.  */
+ /* Applies to: functions.  Cannot be used on inline functions.  */
+-#if _GL_GNUC_PREREQ (11, 0)
++#if _GL_GNUC_PREREQ (11, 0) && !defined(__clang__)
+ # define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+ #else
+ # define _GL_ATTRIBUTE_DEALLOC(f, i)
