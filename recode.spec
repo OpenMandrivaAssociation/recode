@@ -8,13 +8,13 @@
 
 Summary:	GNU recode
 Name:		recode
-Version:	3.7.14
-Release:	2
+Version:	3.7.16
+Release:	1
 Group:		Text tools
 License:	GPLv2
 Url:		https://github.com/rrthomas/recode
 Source0:	https://github.com/rrthomas/recode/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Patch0:		recode-3.7.11-fix-clang.patch
+Patch0:		recode-3.7.16-fix-clang.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool-base
